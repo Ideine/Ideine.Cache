@@ -7,10 +7,10 @@ using Akavache;
 
 namespace Ideine.Cache
 {
-	public class CacheService : ICacheService
+	public class CacheService : ICacheService, IDisposable
 	{
 		private readonly IBlobCache _cacheSystem;
-
+		
 		public CacheService(StorageType storageType)
 		{
 			BlobCache.ApplicationName = "Ideine_Cache";
@@ -30,9 +30,13 @@ namespace Ideine.Cache
 			}
 		}
 
+		public CacheService(IBlobCache blobCache) => _cacheSystem = blobCache;
+
 		private static string GetObjectKey(string key, int page) => $"{key}-{page}";
 
 		#region Pagination
+		//All this region could be build on top of ICacheService as an extension...
+		//...PaginatedCache could be PaginatedCache<T> allowing to insert data + paged value at the same time.
 
 		private class PaginatedCache
 		{
@@ -48,43 +52,68 @@ namespace Ideine.Cache
 			}
 		}
 
-		public async Task PutOnCache<T>(T item, string key, int page, TimeSpan duration)
+		public async Task PutOnCache<T>(T item, string key, int page, DateTimeOffset? absoluteExpiration = null)
 		{
-			await BlobCache.LocalMachine.InsertObject(GetObjectKey(key, page), item, duration);
-			await BlobCache.LocalMachine.InsertObject(Guid.NewGuid().ToString(), new PaginatedCache(key, page), duration);
+			var paginatedKey = GetObjectKey(key, page);
+			await _cacheSystem.InsertObject(paginatedKey, item, absoluteExpiration);
+			await _cacheSystem.InsertObject(Guid.NewGuid().ToString(), new PaginatedCache(key, page), absoluteExpiration);
 		}
 
 		public async Task<T> GetFromCache<T>(string key, int page)
 		{
-			return await BlobCache.LocalMachine.GetObject<T>(GetObjectKey(key, page))
+			return await _cacheSystem.GetObject<T>(GetObjectKey(key, page))
 				.Catch<T, KeyNotFoundException>(_ => Observable.Return(default(T)));
+		}
+
+		public async Task<T> GetOrFetch<T>(string key, Func<Task<T>> fetchFunc, DateTimeOffset? absoluteExpiration = null)
+		{
+			return await _cacheSystem.GetOrFetchObject<T>(
+				key,
+				fetchFunc: () => Observable.FromAsync(fetchFunc),
+				absoluteExpiration: absoluteExpiration);
+		}
+
+		public async Task<T> GetOrFetch<T>(string key, int page, Func<Task<T>> fetchFunc, DateTimeOffset? absoluteExpiration = null)
+		{
+			var paginatedKey = GetObjectKey(key, page);
+			return await _cacheSystem.GetOrFetchObject<T>(
+				paginatedKey,
+				fetchFunc: () => Observable.FromAsync(FetchAndSavePage),
+				absoluteExpiration: absoluteExpiration);
+
+			async Task<T> FetchAndSavePage()
+			{
+				var result = await fetchFunc();
+				await _cacheSystem.InsertObject(Guid.NewGuid().ToString(), new PaginatedCache(key, page), absoluteExpiration);
+				return result;
+			}
 		}
 
 		public async Task InvalidatePage(string key, int page)
 		{
-			await BlobCache.LocalMachine.Invalidate(GetObjectKey(key, page));
+			await _cacheSystem.Invalidate(GetObjectKey(key, page));
 		}
 
 		public async Task InvalidateAllPages(string key)
 		{
-			var pageList = await BlobCache.LocalMachine.GetAllObjects<PaginatedCache>();
+			var pageList = await _cacheSystem.GetAllObjects<PaginatedCache>();
 			if (pageList != null)
 			{
 				var allPages = pageList.Where(x => x.Key == key).Select(pageCache => GetObjectKey(key, pageCache.Page)).ToList();
 				if (allPages.Any())
 				{
-					await BlobCache.LocalMachine.Invalidate(allPages);
+					await _cacheSystem.Invalidate(allPages);
 				}
 			}
 		}
 
-		#endregion
+		#endregion Pagination
 
 		#region Normal
 
-		public async Task PutOnCache<T>(T item, string key, TimeSpan duration)
+		public async Task PutOnCache<T>(T item, string key, DateTimeOffset? absoluteExpiration = null)
 		{
-			await _cacheSystem.InsertObject(key, item, duration);
+			await _cacheSystem.InsertObject(key, item, absoluteExpiration);
 		}
 
 		public async Task<T> GetFromCache<T>(string key)
@@ -98,16 +127,36 @@ namespace Ideine.Cache
 			await _cacheSystem.Invalidate(key);
 		}
 
-		#endregion
-
 		public async Task InvalidateAllEntities<T>()
 		{
-			await BlobCache.LocalMachine.InvalidateAllObjects<T>();
+			await _cacheSystem.InvalidateAllObjects<T>();
 		}
 
 		public async Task InvalidateAllCache()
 		{
-			await BlobCache.LocalMachine.InvalidateAll();
+			await _cacheSystem.InvalidateAll();
 		}
+
+		#endregion Normal
+
+		#region IDisposable Support
+
+		private bool disposedValue = false;
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if (!disposedValue)
+			{
+				if (disposing)
+				{
+					_cacheSystem?.Dispose();
+				}
+				disposedValue = true;
+			}
+		}
+
+		public void Dispose() => Dispose(true);
+
+		#endregion IDisposable Support
 	}
 }
