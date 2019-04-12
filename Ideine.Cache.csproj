@@ -10,7 +10,7 @@
 
     <PropertyGroup>
         <IsPackable>true</IsPackable>
-        <PackageVersion>1.0.1</PackageVersion>
+        <PackageVersion>1.1.0</PackageVersion>
         <PackageId>Ideine.Cache</PackageId>
         <Title>Ideine.Cache</Title>
         <Authors>Valentin Jubert</Authors>

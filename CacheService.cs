@@ -7,7 +7,7 @@ using Akavache;
 
 namespace Ideine.Cache
 {
-	public class CacheService : ICacheService, IDisposable
+	public class CacheService : ICacheService
 	{
 		private readonly IBlobCache _cacheSystem;
 		
@@ -35,8 +35,6 @@ namespace Ideine.Cache
 		private static string GetObjectKey(string key, int page) => $"{key}-{page}";
 
 		#region Pagination
-		//All this region could be build on top of ICacheService as an extension...
-		//...PaginatedCache could be PaginatedCache<T> allowing to insert data + paged value at the same time.
 
 		private class PaginatedCache
 		{
@@ -138,25 +136,5 @@ namespace Ideine.Cache
 		}
 
 		#endregion Normal
-
-		#region IDisposable Support
-
-		private bool disposedValue = false;
-
-		protected virtual void Dispose(bool disposing)
-		{
-			if (!disposedValue)
-			{
-				if (disposing)
-				{
-					_cacheSystem?.Dispose();
-				}
-				disposedValue = true;
-			}
-		}
-
-		public void Dispose() => Dispose(true);
-
-		#endregion IDisposable Support
 	}
 }
