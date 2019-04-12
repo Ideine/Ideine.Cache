@@ -5,12 +5,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="akavache" Version="6.0.20"/>
+        <PackageReference Include="akavache" Version="6.5.1" />
     </ItemGroup>
 
     <PropertyGroup>
         <IsPackable>true</IsPackable>
-        <PackageVersion>1.1.0</PackageVersion>
+        <PackageVersion>1.1.1</PackageVersion>
         <PackageId>Ideine.Cache</PackageId>
         <Title>Ideine.Cache</Title>
         <Authors>Valentin Jubert</Authors>
