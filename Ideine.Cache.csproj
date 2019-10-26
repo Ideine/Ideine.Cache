@@ -10,13 +10,13 @@
 
     <PropertyGroup>
         <IsPackable>true</IsPackable>
-        <PackageVersion>1.1.2</PackageVersion>
+        <PackageVersion>1.1.3</PackageVersion>
         <PackageId>Ideine.Cache</PackageId>
         <Title>Ideine.Cache</Title>
         <Authors>Valentin Jubert</Authors>
         <Description>Cache system based on Akavache</Description>
         <Copyright>Copyright 2019</Copyright>
-        <PackageLicense>https://github.com/Ideine/Ideine.Cache/LICENSE</PackageLicense>
+        <PackageLicenseUrl>https://github.com/Ideine/Ideine.Cache/LICENSE</PackageLicenseUrl>
         <PackageProjectUrl>https://github.com/Ideine/Ideine.Cache</PackageProjectUrl>
         <PackageTags>ideine;xmf2;cache;akavache</PackageTags>
     </PropertyGroup>

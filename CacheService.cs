@@ -11,9 +11,9 @@ namespace Ideine.Cache
 	{
 		private readonly IBlobCache _cacheSystem;
 		
-		public CacheService(StorageType storageType)
+		public CacheService(StorageType storageType, string appName = "Ideine_Cache")
 		{
-			BlobCache.ApplicationName = "Ideine_Cache";
+			BlobCache.ApplicationName = appName;
 			BlobCache.EnsureInitialized();
 
 			switch (storageType)
