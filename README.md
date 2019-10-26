@@ -1,5 +1,7 @@
 # Ideine.Cache
 
+[![Nuget](https://img.shields.io/nuget/v/Ideine.Cache)](https://www.nuget.org/packages/Ideine.Cache/)
+
 Ideine.Cache is a plugin built over Akavache which give an abstraction to store data.
 
 ## Storage type
