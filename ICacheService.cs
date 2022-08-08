@@ -8,8 +8,8 @@ namespace Ideine.Cache
 		Task PutOnCache<T>(T item, string key, int page, DateTimeOffset? absoluteExpiration = default(DateTimeOffset?));
 		Task PutOnCache<T>(T item, string key, DateTimeOffset? absoluteExpiration = default(DateTimeOffset?));
 
-		Task<T> GetFromCache<T>(string key);
-		Task<T> GetFromCache<T>(string key, int page);
+		Task<T> GetFromCache<T>(string key, bool raiseNotFoundException = false);
+		Task<T> GetFromCache<T>(string key, int page, bool raiseNotFoundException = false);
 
 		/// <summary>
 		/// Attempt to return an object from the cache. If the item doesn't
