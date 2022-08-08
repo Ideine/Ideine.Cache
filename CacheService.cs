@@ -57,10 +57,12 @@ namespace Ideine.Cache
 			await _cacheSystem.InsertObject(Guid.NewGuid().ToString(), new PaginatedCache(key, page), absoluteExpiration);
 		}
 
-		public async Task<T> GetFromCache<T>(string key, int page)
+		public async Task<T> GetFromCache<T>(string key, int page, bool raiseNotFoundException = false)
 		{
-			return await _cacheSystem.GetObject<T>(GetObjectKey(key, page))
-				.Catch<T, KeyNotFoundException>(_ => Observable.Return(default(T)));
+			return raiseNotFoundException
+				? await _cacheSystem.GetObject<T>(GetObjectKey(key, page))
+				: await _cacheSystem.GetObject<T>(GetObjectKey(key, page))
+					.Catch<T, KeyNotFoundException>(_ => Observable.Return(default(T)));
 		}
 
 		public async Task<T> GetOrFetch<T>(string key, Func<Task<T>> fetchFunc, DateTimeOffset? absoluteExpiration = null)
@@ -114,10 +116,12 @@ namespace Ideine.Cache
 			await _cacheSystem.InsertObject(key, item, absoluteExpiration);
 		}
 
-		public async Task<T> GetFromCache<T>(string key)
+		public async Task<T> GetFromCache<T>(string key, bool raiseNotFoundException = false)
 		{
-			return await _cacheSystem.GetObject<T>(key)
-				.Catch<T, KeyNotFoundException>(_ => Observable.Return(default(T)));
+			return raiseNotFoundException
+				? await _cacheSystem.GetObject<T>(key)
+				: await _cacheSystem.GetObject<T>(key)
+					.Catch<T, KeyNotFoundException>(_ => Observable.Return(default(T)));
 		}
 
 		public async Task InvalidateCache(string key)
