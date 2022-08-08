@@ -8,7 +8,7 @@ trigger:
 name: Ideine.Cache-CI-$(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
 
 queue:
-  name: Hosted VS2017
+  name: Default
 
 steps:
 - task: NuGetToolInstaller@0
