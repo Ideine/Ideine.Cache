@@ -7,15 +7,10 @@ trigger:
 
 name: Ideine.Cache-CI-$(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
 
-queue:
-  name: Default
+pool:
+  vmImage: 'windows-latest'
 
 steps:
-- task: NuGetToolInstaller@0
-  displayName: 'Use NuGet 4.7.x'
-  inputs:
-    versionSpec: 4.7.x
-
 - task: NuGetCommand@2
   displayName: 'NuGet restore'
   inputs:
