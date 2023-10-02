@@ -16,11 +16,11 @@ steps:
   inputs:
     restoreSolution: 'Xmf2.Cache.sln'
 
-- task: DotNetCoreCli@2
+- task: DotNetCoreCLI@2
   displayName: "Build solution"
   inputs:
     command: 'pack'
-    packagesToPack: 'Xmf2.Cache.sln'
+    packagesToPack: '**/*.csproj'
     configuration: 'Release'
     versioningScheme: 'off'
   condition: succeeded()
