@@ -12,7 +12,7 @@
 
 	<PropertyGroup>
 		<IsPackable>true</IsPackable>
-		<PackageVersion>7.0.0-pre</PackageVersion>
+		<PackageVersion>7.0.0</PackageVersion>
 		<PackageId>Ideine.Cache</PackageId>
 		<Title>Xmf2.Cache</Title>
 		<Authors>Valentin Jubert</Authors>
