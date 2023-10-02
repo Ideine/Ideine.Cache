@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="akavache" Version="9.1.20"/>
+	</ItemGroup>
+
+	<PropertyGroup>
+		<IsPackable>true</IsPackable>
+		<PackageVersion>7.0.0-pre</PackageVersion>
+		<PackageId>Ideine.Cache</PackageId>
+		<Title>Xmf2.Cache</Title>
+		<Authors>Valentin Jubert</Authors>
+		<Description>Cache system based on Akavache</Description>
+		<Copyright>Copyright 2019</Copyright>
+		<PackageLicenseUrl>https://github.com/Ideine/Ideine.Cache/LICENSE</PackageLicenseUrl>
+		<PackageProjectUrl>https://github.com/Ideine/Ideine.Cache</PackageProjectUrl>
+		<PackageTags>ideine;xmf2;cache;akavache</PackageTags>
+	</PropertyGroup>
+
+</Project>

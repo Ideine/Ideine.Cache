@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xmf2.Cache", "src\Xmf2.Cache\Xmf2.Cache.csproj", "{54876C15-D5F8-4C68-B758-95CEED1A1ACB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{EE6165EB-B952-450D-A36E-57F9D3A546E1}"
+ProjectSection(SolutionItems) = preProject
+	.azure.ci.yml = .azure.ci.yml
+	README.md = README.md
+EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{54876C15-D5F8-4C68-B758-95CEED1A1ACB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54876C15-D5F8-4C68-B758-95CEED1A1ACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54876C15-D5F8-4C68-B758-95CEED1A1ACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54876C15-D5F8-4C68-B758-95CEED1A1ACB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

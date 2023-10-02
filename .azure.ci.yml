@@ -14,7 +14,7 @@ steps:
 - task: NuGetCommand@2
   displayName: 'NuGet restore'
   inputs:
-    restoreSolution: 'Ideine.Cache.sln'
+    restoreSolution: 'Xmf2.Cache.sln'
 
 - task: MSBuild@1
   displayName: 'Build solution **/*.sln'
