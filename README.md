@@ -11,4 +11,3 @@ To store data you can use default storage of Akavache (`Local`, `Secure` or `InM
 ## Pagination
 
 In case of you want to store data in many chunk you can use paginated method's version by using `page` argument. In case of you want invalidate all page you must use `InvalidateAllCache()` or `InvalidateAllEntities<T>()`
-

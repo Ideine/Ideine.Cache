@@ -5,30 +5,26 @@ resources:
 trigger:
 - master
 
-name: Ideine.Cache-CI-$(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
+name: Xmf2.Cache-CI-$(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'ubuntu-latest'
 
 steps:
 - task: NuGetCommand@2
   displayName: 'NuGet restore'
   inputs:
-    restoreSolution: 'Ideine.Cache.sln'
+    restoreSolution: 'Xmf2.Cache.sln'
 
-- task: MSBuild@1
-  displayName: 'Build solution **/*.sln'
+- task: DotNetCoreCLI@2
+  displayName: "Build solution"
   inputs:
-    configuration: Release
-    msbuildArguments: '/t:Restore;Build;Pack /p:PackageOutputPath="artifacts/"'
-
-- task: CopyFiles@2
-  displayName: "Copy Files to: $(build.artifactstagingdirectory)"
-  inputs:
-    SourceFolder: artifacts
-    TargetFolder: '$(build.artifactstagingdirectory)'
-  condition: and(succeeded(), in(variables['Build.SourceBranch'], 'refs/heads/master', 'refs/heads/develop')) 
+    command: 'pack'
+    packagesToPack: '**/*.csproj'
+    configuration: 'Release'
+    versioningScheme: 'off'
+  condition: succeeded()
 
 - task: PublishBuildArtifacts@1
   displayName: "Publish Artifact: drop"
-  condition: and(succeeded(), in(variables['Build.SourceBranch'], 'refs/heads/master', 'refs/heads/develop')) 
+  condition: succeeded()
