@@ -7,8 +7,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="akavache" Version="9.1.20"/>
-		<None Include="..\..\LICENSE" Pack="true" />
+		<PackageReference Include="akavache" Version="9.1.20" />
+		<None Include="..\..\LICENSE" Pack="true" PackagePath="" />
 	</ItemGroup>
 
 	<PropertyGroup>
@@ -19,6 +19,7 @@
 		<Authors>Valentin Jubert</Authors>
 		<Description>Cache system based on Akavache</Description>
 		<Copyright>Copyright 2019</Copyright>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageProjectUrl>https://github.com/Ideine/Ideine.Cache</PackageProjectUrl>
 		<PackageTags>ideine;xmf2;cache;akavache</PackageTags>
 	</PropertyGroup>
