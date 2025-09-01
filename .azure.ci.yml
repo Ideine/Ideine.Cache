@@ -16,7 +16,7 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '9.0.x'
-    
+
 - task: DotNetCoreCLI@2
   displayName: 'dotnet restore'
   inputs:
@@ -24,6 +24,7 @@ steps:
     projects: 'Xmf2.Cache.sln'
     feedsToUse: 'select'
     vstsFeed: 'abac689f-cba8-49fc-aa05-4525b9107b76'
+  condition: succeeded()
 
 - task: DotNetCoreCLI@2
   displayName: "Build solution"
