@@ -13,6 +13,8 @@ public class CacheService : ICacheService
 
 	public CacheService(StorageType storageType, string appName = "Ideine_Cache")
 	{
+		Akavache.Sqlite3.Registrations.Start(appName, () => SQLitePCL.Batteries_V2.Init());
+
 		BlobCache.ApplicationName = appName;
 		BlobCache.EnsureInitialized();
 
